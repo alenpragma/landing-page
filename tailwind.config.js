@@ -11,7 +11,8 @@ module.exports = {
         'container': '1280px',
       },
       colors:{
-"main-green":"#8CC84B"
+"main-green":"#8CC84B",
+"main-dark-green":"#2E5444"
       }
     },
   },

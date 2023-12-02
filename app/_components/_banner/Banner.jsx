@@ -11,7 +11,7 @@ const Banner = () => {
   return (
     <>
       <div
-        className="relative w-full  pb-[50px]"
+        className="relative w-full  pb-[50px] md:pb-[80px]"
         style={{
           backgroundImage:
             "url('https://i.postimg.cc/s2ZdskrM/25f72e43a90ea2fab17ddca8e3ee1323.jpg')",
