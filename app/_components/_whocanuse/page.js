@@ -16,7 +16,7 @@ const WhoCanUse = () => {
     <div className="py-[50px] md:py-[80px] bg-[#f6f6f6]">
       <Container>
         <h1 className="text-[30px] md:text-[50px] text-center font-bold text-main-dark-green">
-          Fast Aid Box টি কার জন্য ?
+        ফাস্ট-এইড বাক্স টি কার জন্য ?
         </h1>
         <div className="flex flex-col items-center  md:flex-row gap-y-5 md:gap-x-5 mt-5 md:mt-10">
             <div className="w-full md:w-[49%]">
