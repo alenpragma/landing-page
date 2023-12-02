@@ -30,17 +30,17 @@ const Banner = () => {
             {/* nav bar svg end */}
           </div>
           {/* banner start */}
-          <div className="w-full flex flex-col md:flex-row md:gap-y-0 items-center justify-between gap-y-10 md:gap-x-5 relative z-3 mt-0 md:mt-12">
-                   <div className="w-full md:w-[49%] flex flex-col gap-y-5">
+          <div className="w-full flex flex-col    gap-y-14 md:gap-x-5 relative z-3 mt-0 md:mt-12">
+                   <div className="text-center">
                     <h1 className="text-[30px] md:text-[50px] font-bold text-main-green">
                     অল্প খরচে দ্রুত প্রাথমিক রোগ নিরাময় সল্যুশন
                     </h1>
-                    <h3 className="text-[20px] md:text-[30px] text-white">
+                    <h3 className="text-[14px] md:text-[20px] text-white">
                     দ্রুত ও নির্ভরযোগ্য প্রাথমিক চিকিৎসা সল্যুশন হচ্ছে আমাদের এই ফাস্ট এইড বক্স
                     </h3>
                   
                    </div>
-                   <div className="w-full md:w-[49%]">
+                   <div className="">
                    <Image src={banneproduct} className="w-full h-auto " />
                    </div>
           </div>
