@@ -18,7 +18,7 @@ const WhyShould = () => {
     <div className="py-[50px] md:py-[80px] bg-[#f6f6f6]" style={{backgroundAttachment:"fixed",backgroundImage:"url('https://i.postimg.cc/G3DFRrMw/pexels-nataliya-vaitkevich-7615572.jpg')",backgroundRepeat:"no-repeat",backgroundPosition:"center",backgroundSize:"cover"}}>
       <Container>
         <h1 className="text-[30px] md:text-[50px] text-center font-bold text-main-dark-green p-2 bg-main-green">
-          Fast Aid Box টি কার জন্য ?
+        আপনি ফাস্ট এইড বাক্স কেন কিনবেন
         </h1>
         <div className="flex flex-col md:flex-row gap-y-5 md:gap-x-5 items-center mt-5 md:mt-10">
           <div className="w-full ">
