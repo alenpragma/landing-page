@@ -1,8 +1,9 @@
 import React from "react";
 import Container from "../_container/Container";
 import Image from "next/image";
-import aud from "../../_svg/aud.svg";
 import { TiTick } from "react-icons/ti";
+import bannerproduct from "../../_svg/banneproduct.svg"
+
 const FirstAidKits = () => {
   let audienceData = [
     "কটন, ব্যান্ডেজ",
@@ -31,7 +32,7 @@ const FirstAidKits = () => {
           </div>
 
           <div className="w-full md:w-[49%]">
-            <Image src={aud} className="w-full h-auto" />
+            <Image src={bannerproduct} className="w-full h-auto" />
           </div>
         </div>
       </Container>
