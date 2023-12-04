@@ -2,9 +2,9 @@ import React from "react";
 import Container from "../_container/Container";
 import Image from "next/image";
 import { TiTick } from "react-icons/ti";
-import bannerproduct from "../../_svg/banneproduct.svg"
+import bannerproduct from "../../_svg/banneproduct.svg";
 
-const FirstAidKits = () => {
+const FirstAidKitsTwo = () => {
   let audienceData = [
     "কটন, ব্যান্ডেজ",
     "কমপ্রেস ব্যান্ডেজ",
@@ -23,15 +23,9 @@ const FirstAidKits = () => {
         <p className="text-[14px] text-center font-bold text-main-dark-green">
         ফাস্ট এইড বাক্সটিতে যা যা পাচ্ছেন ?
         </p>
-        <div className="flex flex-col items-center  md:flex-row gap-y-5 md:gap-x-5 mt-5 md:mt-10">
+        <div className="flex flex-col items-center md:flex-row gap-y-5 md:gap-x-5 mt-5 md:mt-10">
           <div className="w-full md:w-[49%]">
-            <ul className="flex flex-col gap-y-5">
-              {audienceData.map((item) => (
-                <li className="text-[20px] md:text-[30px] text-main-green font-bold flex items-center gap-x-2">
-                  <TiTick className="text-[25px] text-main-dark-green" /> {item}
-                </li>
-              ))}
-            </ul>
+            <Image src={bannerproduct} className="w-full h-auto" />
           </div>
           <div className="w-full md:w-[49%]">
             <ul className="flex flex-col gap-y-5">
@@ -48,4 +42,4 @@ const FirstAidKits = () => {
   );
 };
 
-export default FirstAidKits;
+export default FirstAidKitsTwo;

@@ -7,6 +7,9 @@ import Benefits from './_components/_benefits/Benefits'
 import Motivation from './_components/_motivation/Motivation'
 import Faq from './_components/_faq/Faq'
 import Footer from './_components/_footer/Footer'
+import FirstAidKitsTwo from './_components/_firstsirkitstwo/FirstAidKitsTwo'
+import FirstAidKitsThree from './_components/_firstaidkitsthree/FirstAidKitsThree'
+import FirstAidKitsOne from './_components/_firstaidkitsone/firstaidkitsone'
 
 const page = () => {
   return (
@@ -15,6 +18,9 @@ const page = () => {
     <WhoCanUse/>
     <WhyShould/>
     <FirstAidKits/>
+    <FirstAidKitsOne />
+    <FirstAidKitsTwo />
+    <FirstAidKitsThree />
     <Benefits/>
     {/* payment here */}
     <Motivation/>

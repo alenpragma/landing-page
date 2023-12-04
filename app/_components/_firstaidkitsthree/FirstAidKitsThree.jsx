@@ -4,7 +4,7 @@ import Image from "next/image";
 import { TiTick } from "react-icons/ti";
 import bannerproduct from "../../_svg/banneproduct.svg"
 
-const FirstAidKits = () => {
+const FirstAidKitsThree = () => {
   let audienceData = [
     "কটন, ব্যান্ডেজ",
     "কমপ্রেস ব্যান্ডেজ",
@@ -33,14 +33,9 @@ const FirstAidKits = () => {
               ))}
             </ul>
           </div>
+
           <div className="w-full md:w-[49%]">
-            <ul className="flex flex-col gap-y-5">
-              {audienceData.map((item) => (
-                <li className="text-[20px] md:text-[30px] text-main-green font-bold flex items-center gap-x-2">
-                  <TiTick className="text-[25px] text-main-dark-green" /> {item}
-                </li>
-              ))}
-            </ul>
+            <Image src={bannerproduct} className="w-full h-auto" />
           </div>
         </div>
       </Container>
@@ -48,4 +43,4 @@ const FirstAidKits = () => {
   );
 };
 
-export default FirstAidKits;
+export default FirstAidKitsThree;
