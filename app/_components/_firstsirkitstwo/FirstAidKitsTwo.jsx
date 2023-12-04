@@ -27,7 +27,7 @@ const FirstAidKitsTwo = () => {
           <div className="w-full md:w-[49%]">
             <Image src={bannerproduct} className="w-full h-auto" />
           </div>
-          <div className="w-full md:w-[49%]">
+          <div className="w-full md:w-[49%] flex justify-end">
             <ul className="flex flex-col gap-y-5">
               {audienceData.map((item) => (
                 <li className="text-[20px] md:text-[30px] text-main-green font-bold flex items-center gap-x-2">

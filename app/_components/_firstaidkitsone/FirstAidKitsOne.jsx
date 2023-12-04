@@ -24,7 +24,7 @@ const FirstAidKitsOne = () => {
         ফাস্ট এইড বাক্সটিতে যা যা পাচ্ছেন ?
         </p>
         <div className="flex flex-col items-center md:flex-row gap-y-5 md:gap-x-5 mt-5 md:mt-10 justify-between">
-          <div className="w-full md:w-[49%]">
+          <div className="w-full md:w-[49%] flex justify-start">
             <ul className="flex flex-col gap-y-5">
               {audienceData.map((item) => (
                 <li className="text-[20px] md:text-[30px] text-main-green font-bold flex items-center gap-x-2">
