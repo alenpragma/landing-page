@@ -14,18 +14,18 @@ import FirstAidKitsOne from './_components/_firstaidkitsone/firstaidkitsone'
 const page = () => {
   return (
     <>
-    <Banner/>
-    <WhoCanUse/>
-    <WhyShould/>
-    <FirstAidKits/>
-    <FirstAidKitsOne />
-    <FirstAidKitsTwo />
-    <FirstAidKitsThree />
-    <Benefits/>
-    {/* payment here */}
-    <Motivation/>
-    <Faq/>
-    <Footer/>
+      <Banner />
+      <WhoCanUse />
+      <WhyShould />
+      <FirstAidKits />
+      <FirstAidKitsOne />
+      <FirstAidKitsTwo />
+      <FirstAidKitsThree />
+      <Benefits />
+      {/* payment here */}
+      <Motivation />
+      <Faq />
+      <Footer />
     </>
   )
 }
