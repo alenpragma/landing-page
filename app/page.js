@@ -10,14 +10,10 @@ import Footer from './_components/_footer/Footer'
 import FirstAidKitsOne from './_components/_firstaidkitsone/FirstAidKitsOne'
 import FirstAidKitsTwo from './_components/_firstsirkitstwo/FirstAidKitsTwo'
 import FirstAidKitsThree from './_components/_firstaidkitsthree/FirstAidKitsThree'
-import AdminPanel from './_components/_adminpanel/AdminPanel'
-import AddProduct from './_components/_addProduct/AddProduct'
 
 const page = () => {
   return (
     <>
-      <AddProduct />
-      <AdminPanel />
       <Banner />
       <WhoCanUse />
       <WhyShould />
