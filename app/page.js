@@ -10,6 +10,7 @@ import Footer from './_components/_footer/Footer'
 import FirstAidKitsOne from './_components/_firstaidkitsone/FirstAidKitsOne'
 import FirstAidKitsTwo from './_components/_firstsirkitstwo/FirstAidKitsTwo'
 import FirstAidKitsThree from './_components/_firstaidkitsthree/FirstAidKitsThree'
+import Order from './_components/_orderSection/Order'
 
 const page = () => {
   return (
@@ -17,12 +18,13 @@ const page = () => {
       <Banner />
       <WhoCanUse />
       <WhyShould />
-      <FirstAidKits />
-      <FirstAidKitsOne />
+      {/* <FirstAidKits /> */}
+      {/* <FirstAidKitsOne /> */}
       <FirstAidKitsTwo />
-      <FirstAidKitsThree />
+      {/* <FirstAidKitsThree /> */}
       <Benefits />
       {/* payment here */}
+      <Order/>
       <Motivation />
       <Faq />
       <Footer />
