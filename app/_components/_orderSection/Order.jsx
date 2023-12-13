@@ -8,6 +8,14 @@ import { IoTrash, IoAddSharp, IoRemoveSharp } from "react-icons/io5";
 const Order = () => {
   // get all product functionality
   let [allProduct, setAllProduct] = useState([]);
+  let [totalProductAmount, setTotalProductAmount] = useState(0);
+
+  // delivery state
+  const [insideCity, setInsideCity] = useState(false); // Default: inside city
+  const [outsideCity, setOutsideCity] = useState(false);
+  const [prevDeliveryCost, setPrevDeliveryCost] = useState(0);
+  const [prevInsideCity, setPrevInsideCity] = useState(false);
+  const [prevOutsideCity, setPrevOutsideCity] = useState(false);
 
   const headers = {
     Authorization: "gmpro12@",
@@ -44,14 +52,43 @@ const Order = () => {
   const handleDelete = (id) => {
     // Check if the product ID is in the cartArray
     if (cartArray.includes(id)) {
+      // Get the quantity of the product being deleted
+      const deletedQuantity = productQuantities[id] || 0;
+
       // If it is, remove the ID from the cartArray
       setCartArray(cartArray.filter((productId) => productId !== id));
+
+      // Update the total amount by subtracting the product price multiplied by the quantity
+      setTotalProductAmount(
+        (prevTotal) =>
+          prevTotal -
+          (allProduct.find((p) => p._id === id)?.price || 0) * deletedQuantity
+      );
+
+      // Remove the quantity of the deleted product from the productQuantities state
+      setProductQuantities((prevQuantities) => {
+        const { [id]: deletedQuantity, ...rest } = prevQuantities;
+        return rest;
+      });
     }
+    setInsideCity(false);
+    setOutsideCity(false);
+    setPrevInsideCity(false);
+    setPrevOutsideCity(false);
+    setTotalProductAmount(0);
+    setProductQuantities({});
+    setCustomerDetails({
+      customerName: "",
+      customerPhone: "",
+      customerEmail: "",
+      customerAddress: "",
+    });
   };
 
   // product increase decrease management
   const [productQuantities, setProductQuantities] = useState({});
 
+  // product increase decrease management
   const handleIncrease = (id) => {
     // Find the current quantity for the product
     const currentQuantity = productQuantities[id] || 0;
@@ -61,6 +98,12 @@ const Order = () => {
       ...productQuantities,
       [id]: currentQuantity + 1,
     });
+
+    // Update the total amount
+    setTotalProductAmount(
+      (prevTotal) =>
+        prevTotal + (allProduct.find((p) => p._id === id)?.price || 0)
+    );
   };
 
   const handleDecrease = (id) => {
@@ -74,16 +117,69 @@ const Order = () => {
         ...productQuantities,
         [id]: currentQuantity - 1,
       });
-    }
-  };
 
+      // Update the total amount by subtracting the product price
+      setTotalProductAmount(
+        (prevTotal) =>
+          prevTotal - (allProduct.find((p) => p._id === id)?.price || 0)
+      );
+    } else if (currentQuantity === 1) {
+      // If the quantity is 1, remove the product from the cart
+      setProductQuantities((prevQuantities) => {
+        const { [id]: deletedQuantity, ...rest } = prevQuantities;
+        return rest;
+      });
+
+      // Update the total amount by subtracting the product price multiplied by the quantity
+      setTotalProductAmount(
+        (prevTotal) =>
+          prevTotal - (allProduct.find((p) => p._id === id)?.price || 0)
+      );
+    }
+    // If currentQuantity is 0, do nothing to prevent further decrease
+  };
   // Confirm order functionality
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(""); // Added success state
+
   const handleConfirmOrder = () => {
+    // Validate required fields
+    if (
+      !customerDetails.customerName ||
+      !customerDetails.customerPhone ||
+      !customerDetails.customerAddress ||
+      cartArray.length === 0
+    ) {
+      // Handle the case when required fields are missing
+      setError("Please fill in all required fields and select products.");
+      return;
+    }
+
+    // Validate product quantities
+    for (const productId of cartArray) {
+      if (!productQuantities[productId] || productQuantities[productId] <= 0) {
+        // Handle the case when product quantities are not selected
+        setError("Please select quantities for all products.");
+        return;
+      }
+    }
+
+    if (!insideCity && !outsideCity) {
+      // Handle the case when the delivery point is not selected
+      setError(
+        "Please select the delivery point (Inside City or Outside City)."
+      );
+      return;
+    }
+
+    // Calculate additional cost based on inside city or outside city
+    const additionalCost = insideCity ? 50 : outsideCity ? 100 : 0;
+
     // Create an array to store ordered products
     const orderedProducts = [];
 
     // Calculate the total amount
-    let totalAllProductAmount = 0;
+    const totalAllProductAmount = totalProductAmount + additionalCost;
 
     // Loop through the cartArray to gather product details
     cartArray.forEach((productId) => {
@@ -100,9 +196,6 @@ const Order = () => {
         productImageUrl: product.image,
         totalAmount: totalAmount,
       });
-
-      // Update the totalAllProductAmount
-      totalAllProductAmount += totalAmount;
     });
 
     // Create the final JSON structure
@@ -111,13 +204,63 @@ const Order = () => {
       customerPhone: customerDetails.customerPhone,
       customerEmail: customerDetails.customerEmail,
       customerAddress: customerDetails.customerAddress,
-      totalAllProductAmount: totalAllProductAmount,
+      insideCity: insideCity,
+      outsideCity: outsideCity,
+      totalAllProductAmount: totalProductAmount,
       createdAt: new Date().toISOString(),
       orderedProducts: orderedProducts,
     };
 
-    // Log the JSON data to the console
-    console.log(orderData);
+    // Make the POST request to your endpoint
+    axios
+      .post(
+        "https://goodmorning-aid-backend.onrender.com/api/v1/order/createorder",
+        orderData
+      )
+      .then((response) => {
+        // Check if the order was successfully created
+        if (response.status === 201) {
+          // Reset state and show success message
+          setCartArray([]);
+          setProductQuantities({});
+          setCustomerDetails({
+            customerName: "",
+            customerPhone: "",
+            customerEmail: "",
+            customerAddress: "",
+          });
+          setTotalProductAmount(0);
+          setInsideCity(true); // Reset checkboxes
+          setOutsideCity(false);
+          setError(""); // Clear any existing error messages
+          setSuccess("Congratulations! Your order was successfully placed.");
+          setTimeout(() => {
+            setSuccess("");
+          }, [5000]);
+          setInsideCity(false);
+          setOutsideCity(false);
+          setPrevInsideCity(false);
+          setPrevOutsideCity(false);
+          setTotalProductAmount(0);
+          setCartArray([]);
+          setProductQuantities({});
+          setCustomerDetails({
+            customerName: "",
+            customerPhone: "",
+            customerEmail: "",
+            customerAddress: "",
+          });
+        } else {
+          // Handle other response statuses or errors if needed
+          setError(
+            "An error occurred while placing the order. Please try again."
+          );
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        setError("An unexpected error occurred. Please try again.");
+      });
   };
 
   // State to manage customer details
@@ -127,6 +270,26 @@ const Order = () => {
     customerEmail: "",
     customerAddress: "",
   });
+  //  total delivery cost add on total amount
+  const updateTotalProductAmount = (isInsideCity, isOutsideCity) => {
+    // Calculate additional cost based on inside city or outside city
+    const additionalCost = isInsideCity ? 50 : isOutsideCity ? 100 : 0;
+
+    // Calculate the previous delivery cost
+    const prevAdditionalCost =
+      prevInsideCity && !isInsideCity ? 50 : prevOutsideCity ? 100 : 0;
+
+    // Adjust totalProductAmount based on additionalCost and previous delivery cost
+    const totalAmountWithAdditionalCost =
+      totalProductAmount - prevAdditionalCost + additionalCost;
+
+    // Update the total product amount state
+    setTotalProductAmount(totalAmountWithAdditionalCost);
+
+    // Update previous states for the next iteration
+    setPrevInsideCity(isInsideCity);
+    setPrevOutsideCity(isOutsideCity);
+  };
 
   return (
     <div>
@@ -175,7 +338,6 @@ const Order = () => {
                     <AiOutlineInfoCircle className="text-green-500 cursor-pointer" />
                   </div>
                 </div>
-               
               </div>
             ))}
           </div>
@@ -204,6 +366,7 @@ const Order = () => {
           <h3 className="text-lg font-semibold text-main-dark-green ">
             Your Cart
           </h3>
+          <p className="text-[13px] text-green-600">{success && success}</p>
           {cartArray.length == 0 ? (
             "No product in your cart"
           ) : (
@@ -259,6 +422,9 @@ const Order = () => {
           )}
           {cartArray.length > 0 && (
             <div className="mt-4 flex flex-col gap-y-2">
+              <p>Total amount:{totalProductAmount}</p>
+              <p>{success && success}</p>
+              <p className="text-[13px] text-red-500">{error && error}</p>
               <div className="">
                 <small className="text-main-dark-green">Customer Name*</small>
                 <input
@@ -315,9 +481,37 @@ const Order = () => {
                   }
                 />
               </div>
-              <div className="">
+              <div className="flex items-center gap-2 mt-2">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={insideCity}
+                    onChange={() => {
+                      setInsideCity(!insideCity);
+                      setOutsideCity(false);
+                      // Calculate and update the total product amount based on the selected checkboxes
+                      updateTotalProductAmount(!insideCity, false);
+                    }}
+                  />
+                  Inside City
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={outsideCity}
+                    onChange={() => {
+                      setOutsideCity(!outsideCity);
+                      setInsideCity(false);
+                      // Calculate and update the total product amount based on the selected checkboxes
+                      updateTotalProductAmount(false, !outsideCity);
+                    }}
+                  />
+                  Outside City
+                </label>
+              </div>
+              <div className=" mt-2">
                 <div
-                  className="py-[15px] w-full text-center bg-main-dark-green hover:bg-main-green duration-300 text-white rounded"
+                  className="py-[15px] cursor-pointer  text-center bg-main-dark-green hover:bg-main-green duration-300 text-white rounded"
                   onClick={handleConfirmOrder}
                 >
                   Confirm Order
