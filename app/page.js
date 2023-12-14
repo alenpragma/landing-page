@@ -11,6 +11,7 @@ import FirstAidKitsOne from './_components/_firstaidkitsone/FirstAidKitsOne'
 import FirstAidKitsTwo from './_components/_firstsirkitstwo/FirstAidKitsTwo'
 import FirstAidKitsThree from './_components/_firstaidkitsthree/FirstAidKitsThree'
 import Order from './_components/_orderSection/Order'
+import OnlyAidBoxBuy from './_components/_onlyAidboxBuy/OnlyAidBoxBuy'
 
 const page = () => {
   return (
@@ -23,6 +24,7 @@ const page = () => {
       <FirstAidKitsTwo />
       {/* <FirstAidKitsThree /> */}
       <Benefits />
+      <OnlyAidBoxBuy/>
       {/* payment here */}
       <Order/>
       <Motivation />
